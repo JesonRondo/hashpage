@@ -1,5 +1,7 @@
 define(function(require, exports, module) {
-    var router = require('router');
+    // load module
+    var $ = require('zepto');
+    var Router = require('router');
 
-    router.start();
+    Router.start();
 });

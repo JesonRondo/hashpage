@@ -1,29 +1,34 @@
 define(function(require, exports, module) {
-    var $ = require('zepto');
+    var pages = {
+        '#index': {'tpl': '../../tpl/index.html', 'e': 'e_index', 'nav': 0},
+        '#video': {'tpl': '../../tpl/video.html', 'e': 'e_video', 'nav': 1}
+    };
+
+    var loadPage = function(tplPath, eventReg) {
+        require.async(tplPath, function(tpl) {
+            // load page
+            $('#main').html(tpl);
+            // init event
+            if (eventReg !== undefined) {
+                require.async(eventReg, function(e) {
+                    e.init();
+                });
+            }
+        });
+    };
     
     var randerPage = function(hash) {
-        switch(hash) {
-            case '#index':
-                var tpl = require.async('../../tpl/index.html', function(tpl) {
-                    $('body').append(tpl);
-                });
-                break;
-            case '#video':
-                var tpl = require.async('../../tpl/video.html', function(tpl) {
-                    $('body').append(tpl);
-                });
-                break;
-            default:
-                break;
+        if (hash === '') {
+            location.hash = '#index';
+            return;
+        }
+
+        if (pages[hash] !== undefined) {
+            loadPage(pages[hash].tpl, pages[hash].e);
         }
     };
 
-    var clearRander = function() {
-        $('#page').remove();
-    };
-
     exports.paint = function(hash) {
-        clearRander();
         randerPage(hash);
     };
 });

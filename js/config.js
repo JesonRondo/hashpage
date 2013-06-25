@@ -8,6 +8,9 @@ seajs.config({
 	},
 	alias: {
 		'router': 'md/router.js',
-		'rander': 'md/rander.js'
+		'rander': 'md/rander.js',
+
+        'e_index': 'page/e_index.js',
+        'e_video': 'page/e_video.js'
 	}
 });
